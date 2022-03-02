@@ -5,10 +5,12 @@ const phoneDetails = document.getElementById('phone-details')
 const spinner = displayLoading => {
     document.getElementById('spinner').style.display = displayLoading;
 }
+//search event
 const loadPhone = () => {
     const searchFeild = document.getElementById('input-value')
     const searchText = searchFeild.value;
 
+    //error message  check
     if (searchText === '') {
         error.innerText = 'Please, write a product name';
         searchFeild.value = '';
@@ -20,7 +22,9 @@ const loadPhone = () => {
         searchFeild.value = '';
         spinner("none")
         searchPhone.textContent = '';
-    } else {
+    }
+    //// using search text to fetch API data
+    else {
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
             .then(response => response.json())
             .then(data => displayPhone(data.data))
@@ -32,17 +36,22 @@ const loadPhone = () => {
 
 
 }
+//display result
 const displayPhone = phones => {
+    //error  message check
     if (phones.length === 0) {
         error.innerText = 'No Product Found!'
         spinner("none")
     } else {
         searchPhone.textContent = '';
+        //tweenty item showing on UI
         const twentyElement = phones.slice(0, 20)
         for (const phone of twentyElement) {
             // console.log(phone)
             const div = document.createElement('div')
             div.classList.add('col')
+            //daynamic UI for result
+
             div.innerHTML = `
         <div class="card h-100 rounded shadow"">
         <div class="d-flex justify-content-center p-2">
@@ -64,6 +73,7 @@ const displayPhone = phones => {
     }
 }
 
+//featching details
 
 const loadPhoneDetails = (phonId) => {
     const url = `https://openapi.programming-hero.com/api/phone/${phonId}`
@@ -73,6 +83,8 @@ const loadPhoneDetails = (phonId) => {
     document.getElementById('phone-details').textContent = '';
 
 }
+//single result details
+
 const displayPhoneDetails = (detail) => {
     // console.log(detail);
     phoneDetails.textContent = '';
@@ -92,6 +104,7 @@ const displayPhoneDetails = (detail) => {
     });
     const div = document.createElement('div')
     div.classList.add('row', 'w-100')
+    //daynamic UI for details
     div.innerHTML = `
         <div class="col-md-4 d-flex justy-content-center">
         <img src="${detail.image}" class="card-img-top p-4" alt="...">
