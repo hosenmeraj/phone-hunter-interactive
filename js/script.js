@@ -5,7 +5,7 @@ const phoneDetails = document.getElementById('phone-details')
 const spinner = displayLoading => {
     document.getElementById('spinner').style.display = displayLoading;
 }
-//search event
+//search product
 const loadPhone = () => {
     const searchFeild = document.getElementById('input-value')
     const searchText = searchFeild.value;
