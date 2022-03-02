@@ -86,7 +86,10 @@ const displayPhoneDetails = (detail) => {
     }
     const sensors = detail.mainFeatures.sensors;
     console.log(sensors);
-
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     const div = document.createElement('div')
     div.classList.add('row', 'w-100')
     div.innerHTML = `
