@@ -1,26 +1,35 @@
+const error = document.getElementById('error');
 const loadPhone = () => {
-    const error = document.getElementById('error');
+
     const searchFeild = document.getElementById('input-value')
     const searchText = searchFeild.value;
     if (searchText === '') {
         error.innerText = 'Please, write a product name';
         searchFeild.value = '';
 
+    } else if (isNaN(searchText) === false) {
+        error.innerText = 'Product name can not be a Number!';
+        searchFeild.value = '';
     } else {
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
             .then(response => response.json())
             .then(data => displayPhone(data.data))
     }
+    searchFeild.value = '';
 
 }
 const displayPhone = phones => {
-    const searchPhone = document.getElementById('search-phones')
-    const twentyElement = phones.slice(0, 20)
-    for (const phone of twentyElement) {
-        // console.log(phone)
-        const div = document.createElement('div')
-        div.classList.add('col')
-        div.innerHTML = `
+    if (phones.length === 0) {
+        error.innerText = 'No Product Found!'
+    } else {
+        const searchPhone = document.getElementById('search-phones')
+        searchPhone.textContent = '';
+        const twentyElement = phones.slice(0, 20)
+        for (const phone of twentyElement) {
+            // console.log(phone)
+            const div = document.createElement('div')
+            div.classList.add('col')
+            div.innerHTML = `
         <div class="card h-100">
         <img src="${phone.image}" class="card-img-top img-fluid rounded" alt="...">
         <div class="card-body text-center">
@@ -32,7 +41,8 @@ const displayPhone = phones => {
         </div>
         </div>
         `
-        searchPhone.appendChild(div)
+            searchPhone.appendChild(div)
+        }
     }
 }
 const loadPhoneDetails = (phonId) => {
@@ -54,8 +64,9 @@ const displayPhoneDetails = (detail) => {
     const sensors = detail.mainFeatures.sensors;
     console.log(sensors);
     const phoneDetails = document.getElementById('phone-details')
+    phoneDetails.textContent = '';
     const div = document.createElement('div')
-    div.classList.add('row')
+    div.classList.add('row', 'p-3')
     div.innerHTML = `
         <div class="col-md-4 d-flex justy-content-center p-3">
         <img src="${detail.image}" class="card-img-top" alt="...">
