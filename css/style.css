@@ -9,3 +9,7 @@ body {
 #error {
     color: #FF1818;
 }
+
+#spinner {
+    display: none;
+}
